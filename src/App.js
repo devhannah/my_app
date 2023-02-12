@@ -1,25 +1,23 @@
-//- import Button from "./Button";
-import { useEffect, useState} from "react";
-
-function Hello() {
-  useEffect(()=>{
-    console.log("created!");
-    return () => console.log("destroyed");
-  }, [])
-  return <h1>Hello</h1>;
-}
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import Detail from "./routes/Detail";
+import Home from "./routes/Home";
 
 function App() {
-  const [ showing, setShowing] = useState(false);
-  const onClick = (e) => {
-    console.log(e.target.value);
-    setShowing((prev) => !prev);
-  }
   return (
-   <div>
-      {showing ? <Hello /> : null}
-      <button onClick={onClick}>{showing ? "Hide" : "Show"}</button>
-   </div>
+    <Router basename={process.env.PUBLIC_URL}>
+      <Switch>
+        <Route path={`${process.env.PUBLIC_URL}/movie/:id`} element={<Detail />} >
+          <Detail />
+        </Route>
+        <Route path={`${process.env.PUBLIC_URL}/`} element={< Home />}>
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
